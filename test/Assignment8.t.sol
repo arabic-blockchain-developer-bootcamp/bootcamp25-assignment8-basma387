@@ -22,15 +22,16 @@ contract Assignment8Test is Test {
         assertEq(owner, address(this), "Owner of token ID 0 should be the test contract");
     }
 
-    function testMintNFTByNonOwner() public {
-        // Create a fake address that is not the contract owner
-        address nonOwner = makeAddr("nonOwner");
+   function testMintNFTByNonOwner() public {
+    // Create a fake address that is not the contract owner
+    address nonOwner = makeAddr("nonOwner");
 
-        // Start impersonating nonOwner
-        vm.prank(nonOwner);
+    // Start impersonating nonOwner
+    vm.prank(nonOwner);
 
-        // Expect revert due to onlyOwner restriction
-        vm.expectRevert("Ownable: caller is not the owner");
-        assignment.mintNFT(temporaryUriForTesting);
-    }
+    // Expect revert due to onlyOwner restriction
+    vm.expectRevert(abi.encodeWithSelector(OwnableUnauthorizedAccount.selector, nonOwner));
+    assignment.mintNFT(temporaryUriForTesting);
+}
+    
 }
