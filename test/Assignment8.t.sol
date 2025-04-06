@@ -9,25 +9,28 @@ contract Assignment8Test is Test {
     string public temporaryUriForTesting = "https://azure-yearning-shrew-339.mypinata.cloud/ipfs/bafkreifo3hg2hnig5ojay3tonmf6un3qlxqjienffsmpkq5cfpept2fake";
 
     function setUp() public {
+        // Deploy the Assignment8 contract
         assignment = new Assignment8();
     }
 
     function testMintNFTByOwner() public {
-        // Mint an NFT to the test contract (owner calling)
-        assignment.mintNFT(temporaryUriForTesting);
+        // Mint an NFT to the test contract (which is the owner)
+        uint256 tokenId = assignment.mintNFT(temporaryUriForTesting);
 
-        // Check ownership of the minted NFT
-        address owner = assignment.ownerOf(0);
-        assertEq(owner, address(this), "Owner of token ID 1 should be the test contract");
+        // Check ownership of the minted NFT (tokenId = 0 expected)
+        address owner = assignment.ownerOf(tokenId);
+        assertEq(owner, address(this), "Owner of token ID 0 should be the test contract");
     }
 
     function testMintNFTByNonOwner() public {
-        // Create a non-owner address
+        // Create a fake address that is not the contract owner
         address nonOwner = makeAddr("nonOwner");
+
+        // Start impersonating nonOwner
         vm.prank(nonOwner);
 
-        // Expect the transaction to revert
-        vm.expectRevert();
+        // Expect revert due to onlyOwner restriction
+        vm.expectRevert("Ownable: caller is not the owner");
         assignment.mintNFT(temporaryUriForTesting);
     }
 }
