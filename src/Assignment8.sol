@@ -11,7 +11,7 @@ contract Assignment8 is ERC721URIStorage, Ownable {
     uint256 private _tokenIdCounter;
 
     // Pass name and symbol of the NFT token collection
-    constructor() ERC721("BuzzBuzz", "Buz") {}
+    constructor() ERC721("BuzzBuzz", "Buz") Ownable (msg.sender) {}
 
     // Mint NFT function
     function mintNFT(string memory jsonURI) external onlyOwner returns (uint256) {
