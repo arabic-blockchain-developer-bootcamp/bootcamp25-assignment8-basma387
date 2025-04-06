@@ -5,6 +5,9 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";    
 import "@openzeppelin/contracts/access/Ownable.sol";
 
+// Define the custom error
+error OwnableUnauthorizedAccount(address account);
+
 // Make this contract inherit from ERC721URIStorage and Ownable
 contract Assignment8 is ERC721URIStorage, Ownable {
     // Declare a private uint called _tokenIdCounter
@@ -24,4 +27,13 @@ contract Assignment8 is ERC721URIStorage, Ownable {
 
         return newTokenId;
     }
+
+    // Override the onlyOwner modifier to use the custom error
+    modifier onlyOwner() override {
+        if (msg.sender != owner()) {
+            revert OwnableUnauthorizedAccount(msg.sender);
+        }
+        _;
+    }
 }
+   
