@@ -23,14 +23,18 @@ contract Assignment8Test is Test {
     }
 
     function testMintNFTByNonOwner() public {
-        // Create a fake address that is not the contract owner
-        address nonOwner = makeAddr("nonOwner");
+        // Create a label for the non-owner account
+        address nonOwner = address(0xcBf285639F952Bb8fb557D0532E38219CA5133C3);
+        vm.label(nonOwner, "nonOwner");
 
-        // Start impersonating nonOwner
+        // Prank the next call to be made from the non-owner account
         vm.prank(nonOwner);
 
-        // Expect revert due to onlyOwner restriction
-        vm.expectRevert("Ownable: caller is not the owner");
-        assignment.mintNFT(temporaryUriForTesting);
+        // Expect the custom error OwnableUnauthorizedAccount to be thrown
+        vm.expectRevert(abi.encodeWithSelector(OwnableUnauthorizedAccount.selector, nonOwner));
+
+        // Attempt to mint NFT as a non-owner
+        assignment8.mintNFT("https://azure-yearning-shrew-339.mypinata.cloud/ipfs/bafkreifo3hg2hnig5ojay3tonmf6un3qlxqjienffsmpkq5cfpept2fake");
     }
 }
+      
