@@ -14,7 +14,7 @@ contract Assignment8 is ERC721URIStorage, Ownable {
     uint256 private _tokenIdCounter;
 
     // Pass name and symbol of the NFT token collection
-    constructor() ERC721("BuzzBuzz", "Buz") Ownable (msg.sender) {}
+    constructor() ERC721("BuzzBuzz", "Buz") Ownable() {}
 
     // Mint NFT function
     function mintNFT(string memory jsonURI) external onlyOwner returns (uint256) {
@@ -28,12 +28,10 @@ contract Assignment8 is ERC721URIStorage, Ownable {
         return newTokenId;
     }
 
-    // Override the onlyOwner modifier to use the custom error
-    modifier onlyOwner() override {
+    // Use a custom function instead of overriding onlyOwner
+    function enforceOnlyOwner() internal view {
         if (msg.sender != owner()) {
             revert OwnableUnauthorizedAccount(msg.sender);
         }
-        _;
     }
 }
-   
