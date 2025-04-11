@@ -1,3 +1,7 @@
+pragma solidity ^0.8.29;
+
+error OwnableUnauthorizedAccount(address caller);
+
 contract Assignment8 is ERC721URIStorage, Ownable {
     uint256 private _tokenIdCounter;
 
