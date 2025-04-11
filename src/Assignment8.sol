@@ -1,4 +1,7 @@
 pragma solidity ^0.8.29;
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
+import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+
 
 error OwnableUnauthorizedAccount(address caller);
 
@@ -24,4 +27,4 @@ contract Assignment8 is ERC721URIStorage, Ownable {
         }
     }
 }
-       
+  
