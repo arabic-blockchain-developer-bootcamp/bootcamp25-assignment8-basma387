@@ -3,6 +3,7 @@ pragma solidity ^0.8.13;
 
 import {Test} from "forge-std/Test.sol";
 import {Assignment8} from "../src/Assignment8.sol";
+import {OwnableUnauthorizedAccount} from "../src/Assignment8.sol"; // Import the custom error
 
 contract Assignment8Test is Test {
     Assignment8 assignment;
